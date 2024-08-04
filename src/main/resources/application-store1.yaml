@@ -1,0 +1,15 @@
+reference-data:
+
+  engine-types: Бензиновий, Дизельний, Гібридний, Електричний
+
+
+  fuels:
+
+    - name: Бензин
+      variants: А-95, А-98, А-100
+
+    - name: Дизель
+      variants: Літній, Зимовий, Арктичний
+
+    - name: Електрика
+      variants: Super-charge, Ultra-charge

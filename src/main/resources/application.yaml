@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: jan-2024-java-spring-my-hw
+
+  profiles:
+    active: store1
+
+#    Spring Boot автоматично підвантажує налаштування з application-store1.yaml

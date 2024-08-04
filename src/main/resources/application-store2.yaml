@@ -1,0 +1,17 @@
+reference-data:
+
+  engine-types: Бензиновий, Дизельний, Газ
+
+  fuels:
+
+    - name: Бензин
+      variants: А-60, А-72, А-80
+
+    - name: Дизель
+      variants: Осінній, Весняний
+
+    - name: Електрика
+      variants: 220В, 380В
+
+    - name: Газ
+      variants: Пропан, Метан
