@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api") // всі інші запити починаються з /api, наприклад /api/engine-types
 @RequiredArgsConstructor // анотація будує конструктор ін'єкцій залежностей
 public class ReferenceDataController {
 
@@ -22,7 +22,7 @@ public class ReferenceDataController {
     @Value("${reference-data.engine-types}")
     private List<String> engineTypes;
 
-    // Ін'єкція залежностей через конструктор
+    // Ін'єкція залежностей через конструктор/ працює в парі з @RequiredArgsConstructor + final!
     private final ReferenceDataProperties referenceDataProperties;
 
 
@@ -41,13 +41,30 @@ public class ReferenceDataController {
     }
 
     // Обробка GET-запиту на /api/fuel-types/{fuelName}
+//    @GetMapping("/fuel-types/{fuelName}")
+//    public ResponseEntity<FuelType> getFuelTypeByName(@PathVariable String fuelName) {
+//        return referenceDataProperties.getFuels().stream()
+//                .filter(fuelType -> Objects.equals(fuelType.getName(), fuelName))
+//                .findFirst()
+//                .map(ResponseEntity::ok)
+//                .orElse(ResponseEntity.notFound().build());
+//    }
+
     @GetMapping("/fuel-types/{fuelName}")
     public ResponseEntity<FuelType> getFuelTypeByName(@PathVariable String fuelName) {
-        return referenceDataProperties.getFuels().stream()
-                .filter(fuelType -> Objects.equals(fuelType.getName(), fuelName))
-                .findFirst()
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        System.out.println("Запит отримано для fuelName: " + fuelName);
+        // відповідь в терміналі!!!
+        Optional<FuelType> result = referenceDataProperties.getFuels().stream()
+                .filter(fuelType -> fuelType.getName().equalsIgnoreCase(fuelName))
+                .findFirst();
+
+        if (result.isPresent()) {
+            System.out.println("Знайдено: " + result.get());
+        } else {
+            System.out.println("Не знайдено жодного відповідного типу пального для: " + fuelName);
+        }
+
+        return ResponseEntity.of(result);
     }
 
     // Обробка GET-запиту на /api/all-reference-data
@@ -58,3 +75,12 @@ public class ReferenceDataController {
     }
 
 }
+
+// цей клас забезпечить початкове завантаження
+//@RestController
+//class Reference {
+//    @GetMapping("/")
+//    public String home() {
+//        return "Welcome to the Car Service API!";
+//    }
+//}

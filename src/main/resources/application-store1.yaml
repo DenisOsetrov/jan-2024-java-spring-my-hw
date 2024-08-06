@@ -11,5 +11,8 @@ reference-data:
     - name: Дизель
       variants: Літній, Зимовий, Арктичний
 
+    - name: Гібрид
+      variants: Бензин, Електрика
+
     - name: Електрика
       variants: Super-charge, Ultra-charge

@@ -35,17 +35,28 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
-			<scope>runtime</scope>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-configuration-processor</artifactId>
-			<optional>true</optional>
-		</dependency>
+		<!--Наступні 2 залежності просять обробити шлях на http://localhost:8080/
+		бо повертають помилку про відсутність статичних даних!-->
+
+		<!--spring-boot-devtools використовується для полегшення процесу розробки.
+		Воно забезпечує функціональність, таку як автоматичне перезавантаження додатка
+		при зміні коду і підвищує зручність розробки.-->
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.boot</groupId>-->
+<!--			<artifactId>spring-boot-devtools</artifactId>-->
+<!--			<scope>runtime</scope>-->
+<!--			<optional>true</optional>-->
+<!--		</dependency>-->
+
+<!--		&lt;!&ndash;spring-boot-configuration-processor використовується для генерації-->
+<!--		метаданих конфігураційних властивостей у вашому проекті, що допомагає-->
+<!--		в автодоповненні і перевірці конфігурацій у IDE.&ndash;&gt;-->
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.boot</groupId>-->
+<!--			<artifactId>spring-boot-configuration-processor</artifactId>-->
+<!--			<optional>true</optional>-->
+<!--		</dependency>-->
+
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>

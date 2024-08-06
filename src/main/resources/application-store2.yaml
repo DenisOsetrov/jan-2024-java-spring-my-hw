@@ -1,6 +1,6 @@
 reference-data:
 
-  engine-types: Бензиновий, Дизельний, Газ
+  engine-types: Бензиновий, Дизельний, Електрика, Газ
 
   fuels:
 
