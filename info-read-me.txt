@@ -1,158 +1,29 @@
                                 План розробки аплікації CarService
-                                                Вступ
-Створення проекту Spring Boot:
 
-            - Перейдіть на сайт Spring Initializr.
-            - Оберіть наступні налаштування:
-            - Project: Maven Project
-            - Language: Java
-            - Spring Boot: Найновішу стабільну версію (наприклад, 3.3.2)
-            - Project Metadata:
-            - Group: org.yourname
-            - Artifact: car-service
-            - Name: CarService
-            - Description: Car Service API with configuration-based data
-            - Package Name: org.yourname.carservice
-            - Packaging: Jar
-            - Java Version: 17
-            - Dependencies: Додайте наступні залежності:
-            - Spring Web
-            - Lombok
-            - Spring Boot DevTools (для полегшення розробки)
-            - Spring Boot Configuration Processor
-            - Завантажте проект та розпакуйте його на вашому комп'ютері.
+Підключити базу даних
 
-Запуск проекту:
+Вибрати базу даних (PostgreSQL).
 
-            Перейдіть до папки src/main/java/org/yourname/carservice.
-            Відкрийте файл CarServiceApplication.java.
-            Запустіть його, натиснувши на зелену стрілку або через контекстне меню Run 'CarServiceApplication'.
-            Перевірте, що сервер запустився, відвідавши http://localhost:8080 у вашому веб-браузері.
-            Ви повинні побачити сторінку Whitelabel Error Page, що означає, що сервер працює.
-Початок роботи
-Створення конфігураційних файлів:
+        Налаштувати підключення до бази даних у файлі application.yaml.
+        - Підключемо залежність для docker - spring-boot-docker-compose
+        - створимо конфігураційний файл для докера в корні проєкту - compose.yaml
+        - Додати залежності до pom.xml для PostgreSQL та Liquibase (ця залежність
+        потребує налаштувань в application.yaml та окремого конфігураційного файлу
+        db.changelog-master.yaml).
 
+Створити сутність Car в пекеджі entity
+        Створити Java-клас Car з полями id, model, enginePower, та потім додати нове поле torque.
+        Створити міграцію для таблиці car
 
-У директорії src/main/resources, створіть файл application.yaml.
+Налаштувати Liquibase для роботи з вашою базою даних.
+        Створити файл changelog для Liquibase, щоб створити таблицю car з полями id, model, engine_power.
+        Додати CarController з базовими CRUD операціями
 
-            spring:
-              application:
-                name: Car Service
-              profiles:
-                active: profile1
+Створити контролер CarController.
+        Реалізувати CRUD-операції: GET /cars, GET /cars/{id}, POST /cars, PUT /cars/{id}, DELETE /cars/{id}.
+        Реалізувати фільтрацію GET /cars за параметрами minEnginePower та maxEnginePower.
+        Додати нову колонку torque
 
-У директорії src/main/resources, створіть файл application-profile1.yaml.
-            reference-data:
-              engine-types: Бензиновий, Дизельний, Гібридний, Електричний
-              fuel-types:
-                - name: Бензин
-                  variants: А-95, А-98, А-100
-                - name: Дизель
-                  variants: Зимовий, Літній, Арктичний
-                - name: Електрика
-                  variants:
+Оновити файл changelog Liquibase для додавання колонки torque в таблицю car.
+Оновити клас Car, щоб відобразити цю зміну.
 
-У директорії src/main/resources, створіть файл application-profile2.yaml для іншого профілю:
-reference-data:
-                engine-types: Бензиновий, Дизельний
-                fuel-types:
-                  - name: Бензин
-                    variants: А-92, А-95, А-98
-                  - name: Дизель
-                    variants: Літній, Зимовий
-                  - name: Електрика
-                    variants:
-                  - name: Газ
-                    variants: Пропан, Метан
-
-
-Оскільки ми вказали нові типи і поля, то поки видає помилки,
-Створення класу для обробки конфігурацій:
-
-
-
-Створіть клас ReferenceDataProperties у пакеті org.yourname.carservice.config:
-
-                @Data
-                @Component
-                @ConfigurationProperties(prefix = "reference-data")
-                public class ReferenceDataProperties {
-                    private List<FuelType> fuelTypes;
-                }
-
-                @Data
-                class FuelType {
-                    private String name;
-                    private List<String> variants;
-                }
-
-
-Створення контролера для доступу до даних:
-
-Створіть пакет org.yourname.carservice.controller.
-Додайте новий клас ReferenceDataController.java:
-
-package org.yourname.carservice.controller;
-
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.yourname.carservice.config.ReferenceDataProperties;
-import org.yourname.carservice.config.FuelType;
-
-import java.util.List;
-import java.util.Objects;
-
-@RestController
-@RequestMapping("/api")
-public class ReferenceDataController {
-
-    // Ін'єкція значень з application.yaml за допомогою анотації @Value
-    @Value("${reference-data.engine-types}")
-    private List<String> engineTypes;
-
-    // Ін'єкція залежностей через конструктор
-    private final ReferenceDataProperties referenceDataProperties;
-
-    public ReferenceDataController(ReferenceDataProperties referenceDataProperties) {
-        this.referenceDataProperties = referenceDataProperties;
-    }
-
-    // Обробка GET-запиту на /api/engine-types
-    @GetMapping("/engine-types")
-    public ResponseEntity<List<String>> getEngineTypes() {
-        // Повернення списку типів двигунів
-        return ResponseEntity.ok(engineTypes);
-    }
-
-    // Обробка GET-запиту на /api/fuel-types
-    @GetMapping("/fuel-types")
-    public ResponseEntity<List<FuelType>> getFuelTypes() {
-        // Повернення списку типів палива з варіантами
-        return ResponseEntity.ok(referenceDataProperties.getFuelTypes());
-    }
-
-    // Обробка GET-запиту на /api/fuel-types/{fuelName}
-    @GetMapping("/fuel-types/{fuelName}")
-    public ResponseEntity<FuelType> getFuelTypeByName(@PathVariable String fuelName) {
-        return referenceDataProperties.getFuelTypes().stream()
-                .filter(fuelType -> Objects.equals(fuelType.getName(), fuelName))
-                .findFirst()
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
-}
-Завершення роботи
-Запуск проекту з профілем:
-
-Переконайтесь, що у application.yaml активний потрібний профіль (наприклад, profile1).
-Запустіть проект та перевірте роботу API, викликавши відповідні методи:
-GET /api/engine-types - повертатиме типи двигунів.
-GET /api/fuel-types - повертатиме всі типи палива разом з варіантами.
-GET /api/fuel-types/{fuelName} - повертатиме деталі конкретного типу палива за назвою.
-Розширення та тестування:
-
-Додайте більше методів для обробки інших запитів, якщо це необхідно.
-Напишіть тести для контролерів, щоб переконатися в їх коректній роботі.
-Висновок
-Цей план дозволяє створити Spring Boot аплікацію CarService, яка використовує конфігураційні файли для зберігання та отримання інформації про типи двигунів і палива. Використання профілів дозволяє легко змінювати конфігурації залежно від середовища або потреби.

@@ -41,32 +41,71 @@
 		<!--spring-boot-devtools використовується для полегшення процесу розробки.
 		Воно забезпечує функціональність, таку як автоматичне перезавантаження додатка
 		при зміні коду і підвищує зручність розробки.-->
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.boot</groupId>-->
-<!--			<artifactId>spring-boot-devtools</artifactId>-->
-<!--			<scope>runtime</scope>-->
-<!--			<optional>true</optional>-->
-<!--		</dependency>-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<scope>runtime</scope>
+			<optional>true</optional>
+		</dependency>
 
-<!--		&lt;!&ndash;spring-boot-configuration-processor використовується для генерації-->
-<!--		метаданих конфігураційних властивостей у вашому проекті, що допомагає-->
-<!--		в автодоповненні і перевірці конфігурацій у IDE.&ndash;&gt;-->
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.boot</groupId>-->
-<!--			<artifactId>spring-boot-configuration-processor</artifactId>-->
-<!--			<optional>true</optional>-->
-<!--		</dependency>-->
+		<!--spring-boot-configuration-processor використовується для генерації
+		метаданих конфігураційних властивостей у вашому проекті, що допомагає
+		в автодоповненні і перевірці конфігурацій у IDE.-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
 
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+						<!--dependency for hw-2-->
+		<!--spring-boot-starter-data-jpa є важливою частиною проекту Spring Boot,
+		якщо ви працюєте з базами даних за допомогою Java Persistence API (JPA).
+		- спрощує створення та управління репозиторіями за допомогою інтерфейсу JpaRepository.
+		- Дозволяє автоматично генерувати SQL-запити на основі методів репозиторію,
+		  таких як findById, save, deleteById і т.д.
+		  		Наприклад:
+		  				public interface CarRepository extends JpaRepository<Car, Long> {
+                            Тепер ви можете використовувати методи JpaRepository,
+                            такі як findById, save, delete і т.д.
+						}-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+
+		<!-- Драйвер для PostgreSQL -->
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>${postgresql.version}</version>
+		</dependency>
+
+<!--		 Liquibase для управління міграціями -->
+<!--		При додаванні цієї залежності маємо вказати -->
+<!--		<dependency>-->
+<!--			<groupId>org.liquibase</groupId>-->
+<!--			<artifactId>liquibase-core</artifactId>-->
+<!--		</dependency>-->
+
+		<!--для підняття докера і роботи з БД-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-docker-compose</artifactId>
+		</dependency>
+
+
 	</dependencies>
 
 	<build>
