@@ -10,6 +10,8 @@ services:
       POSTGRES_DB: "XXX"
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
+      POSTGRES_INITDB_ARGS: "--auth-host=md5 --auth-local=trust"
+      command: postgres -c 'listen_addresses=*'
 
   pgadmin:
     image: dpage/pgadmin4

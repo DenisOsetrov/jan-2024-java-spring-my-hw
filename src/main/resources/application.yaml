@@ -2,9 +2,6 @@ spring:
   application:
     name: jan-2024-java-spring-my-hw
 
-  profiles:
-    active: store1    # Spring Boot автоматично підвантажує налаштування з application-store1.yaml
-
   #  Налаштувати підключення до бази даних (для докера)
   datasource:
     url: "jdbc:postgresql://localhost:5432/XXX"
@@ -13,7 +10,7 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
 
   # Використовується Liquibase для міграцій
 #  liquibase:
