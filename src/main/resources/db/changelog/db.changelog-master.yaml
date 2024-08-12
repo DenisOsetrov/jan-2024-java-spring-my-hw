@@ -1,0 +1,45 @@
+#  При першому застосуванні міграції, якщо таблиця ще не існує в базі даних,
+#  потрібно створити її та описати всі колонки в changeSet
+
+#databaseChangeLog:
+#  - changeSet:
+#      id: "1"
+#      author: osetrov
+#      changes:
+#        - createTable:
+#            tableName: cars
+#            columns:
+#              - column:
+#                  name: id
+#                  type: BIGINT
+#                  autoIncrement: true
+#                  constraints:
+#                    primaryKey: true
+#              - column:
+#                  name: brand
+#                  type: VARCHAR(255)
+#              - column:
+#                  name: model
+#                  type: VARCHAR(255)
+#              - column:
+#                  name: year
+#                  type: INTEGER
+#              - column:
+#                  name: price
+#                  type: INTEGER
+#              - column:
+#                  name: enginePower
+#                  type: DOUBLE
+#
+#  - changeSet:
+#      id: "2"
+#      author: osetrov
+#      changes:
+#        - addColumn:
+#            tableName: cars
+#            columns:
+#              - column:
+#                  name: torque
+#                  type: DOUBLE
+#                  constraints:
+#                    nullable: true # Дозволяє null

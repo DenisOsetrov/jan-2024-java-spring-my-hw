@@ -95,7 +95,7 @@ public class CarController {
                     car.setModel(updatedCar.getModel());
                     car.setYear(updatedCar.getYear());
                     car.setEnginePower(updatedCar.getEnginePower());
-                    //  car.setTorque(updatedCar.getTorque()); // Оновлення torque
+//                    car.setTorque(updatedCar.getTorque()); // Оновлення torque
                     // Зберігаємо оновлений автомобіль і повертаємо його з HTTP статусом 200 OK
                     return ResponseEntity.ok(carRepository.save(car));
                 })

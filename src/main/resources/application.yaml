@@ -10,8 +10,4 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: update
-
-  # Використовується Liquibase для міграцій
-#  liquibase:
-#    change-log: classpath:/db/changelog/db.changelog-master.yaml
+      ddl-auto: update # none для міграції

@@ -22,7 +22,8 @@ public class Car {
             private String model; // Модель автомобіля
             private int year;
             private int price;
-            private double enginePower; // Потужність двигуна
+            private double enginePower;
 
-            // Додамо поле torque пізніше
+            // це поле для міграції. Дані міграції в файлі db.changelog-master.yaml
+//            private double torque; // Крутний момент (додане поле) пізніше
 }
